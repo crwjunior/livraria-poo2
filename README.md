@@ -19,38 +19,82 @@
 - Listar todos os livros permitidos/proibidos.
 - Encontrar livro permitido/proibido por ID.
 
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+## Informações
 
-## Running the application
+*Banco de dados* : MySQL;
+<br>
+*JDBC* : Mysql Connector 8.0.33;
+<br>
+*JAVA* : OpenJDK 20;
 
-The project is a standard Maven project. To run it from the command line,
-type `mvnw` (Windows), or `./mvnw` (Mac & Linux), then open
-http://localhost:8080 in your browser.
+## Query para rodar no banco de dados
 
-You can also import the project to your IDE of choice as you would with any
-Maven project. Read more on [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/importing) (Eclipse, IntelliJ IDEA, NetBeans, and VS Code).
+### Importante rodar antes de executar o programa!
 
-## Deploying to Production
+```sql
 
-To create a production build, call `mvnw clean package -Pproduction` (Windows),
-or `./mvnw clean package -Pproduction` (Mac & Linux).
-This will build a JAR file with all the dependencies and front-end resources,
-ready to be deployed. The file can be found in the `target` folder after the build completes.
+CREATE DATABASE IF NOT EXISTS biblioteca;
+USE biblioteca;
 
-Once the JAR file is built, you can run it using
-`java -jar target/mytodo-1.0-SNAPSHOT.jar`
+-- Cria tabela
+CREATE TABLE IF NOT EXISTS livros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    descricao TEXT
+);
 
-## Useful links
+ALTER TABLE livros
+ADD dataPublicacao DATE;
 
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorial at [vaadin.com/docs/latest/tutorial/overview](https://vaadin.com/docs/latest/tutorial/overview).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/docs/latest/components](https://vaadin.com/docs/latest/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Build any UI without custom CSS by discovering Vaadin's set of [CSS utility classes](https://vaadin.com/docs/styling/lumo/utility-classes). 
-- Find a collection of solutions to common use cases at [cookbook.vaadin.com](https://cookbook.vaadin.com/).
-- Find add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Discord channel](https://discord.gg/MYFq5RTbBn).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin).
+-- insere registros
 
+INSERT INTO livros (titulo, autor, descricao) VALUES
+    ('Dom Quixote', 'Miguel de Cervantes', 'Dom Quixote é uma obra do escritor espanhol Miguel de Cervantes. É considerada uma das maiores obras da literatura universal.'),
+    ('Romeu e Julieta', 'William Shakespeare', 'Romeu e Julieta é uma tragédia escrita por William Shakespeare. Conta a história de dois jovens amantes de famílias inimigas em Verona.'),
+    ('1984', 'George Orwell', '1984 é um romance distópico escrito por George Orwell. A obra é um clássico da literatura sobre totalitarismo.'),
+    ('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'O Pequeno Príncipe é uma história escrita por Antoine de Saint-Exupéry. É um conto filosófico sobre um príncipe que viaja por diferentes planetas.'),
+    ('Harry Potter e a Pedra Filosofal', 'J.K. Rowling', 'Harry Potter e a Pedra Filosofal é o primeiro livro da série Harry Potter, escrito por J.K. Rowling.'),
+    ('Cem Anos de Solidão', 'Gabriel García Márquez', 'Cem Anos de Solidão é um romance do escritor colombiano Gabriel García Márquez. É considerada uma obra-prima do realismo mágico.'),
+    ('Orgulho e Preconceito', 'Jane Austen', 'Orgulho e Preconceito é um romance de Jane Austen. É uma comédia de costumes que aborda temas como casamento e preconceito social.'),
+    ('O Senhor dos Anéis', 'J.R.R. Tolkien', 'O Senhor dos Anéis é uma trilogia de fantasia escrita por J.R.R. Tolkien. É ambientada em um mundo de fantasia chamado Terra-média.'),
+    ('A Revolução dos Bichos', 'George Orwell', 'A Revolução dos Bichos é uma novela satírica escrita por George Orwell. Ela faz uma crítica à corrupção do poder e ao totalitarismo.'),
+    ('Crime e Castigo', 'Fiódor Dostoiévski', 'Crime e Castigo é um romance de Fiódor Dostoiévski. Conta a história de Raskólnikov, um estudante que comete um assassinato e lida com a culpa.');
+
+UPDATE livros SET dataPublicacao = '2023-09-30' WHERE id = 1;
+UPDATE livros SET dataPublicacao = '2023-09-25' WHERE id = 2;
+UPDATE livros SET dataPublicacao = '2023-08-15' WHERE id = 3;
+UPDATE livros SET dataPublicacao = '2023-07-20' WHERE id = 4;
+UPDATE livros SET dataPublicacao = '2023-09-05' WHERE id = 5;
+UPDATE livros SET dataPublicacao = '2023-06-10' WHERE id = 6;
+UPDATE livros SET dataPublicacao = '2023-04-30' WHERE id = 7;
+UPDATE livros SET dataPublicacao = '2023-03-18' WHERE id = 8;
+UPDATE livros SET dataPublicacao = '2023-02-05' WHERE id = 9;
+UPDATE livros SET dataPublicacao = '2023-01-15' WHERE id = 10;
+
+select * from livros
+
+
+-- Criar a tabela livros_proibidos
+CREATE TABLE IF NOT EXISTS livros_proibidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    dataPublicacao DATE
+);
+
+-- Inserir registros de livros proibidos
+INSERT INTO livros_proibidos (titulo, autor, descricao, dataPublicacao) VALUES
+    ('O Livro da Maldição', 'Autor Desconhecido', 'Este livro é conhecido por trazer má sorte e desgraça a quem o lê.', '2020-01-01'),
+    ('A Magia Negra', 'Feiticeiro Sombrio', 'Um guia para práticas de magia negra e rituais obscuros.', '2019-03-15'),
+    ('O Livro dos Segredos Profundos', 'Anônimo', 'Contém informações perigosas sobre conspirações globais.', '2018-06-20'),
+    ('A Arte da Manipulação', 'Maquiavel', 'Um manual para manipular e controlar pessoas.', '2017-11-10'),
+    ('A Peste da Destruição', 'Autor Desconhecido', 'Escrito em uma língua desconhecida, a leitura deste livro pode causar doenças.', '2016-04-05'),
+    ('O Livro Amaldiçoado', 'Bruxa Sombria', 'Diz-se que aqueles que o possuem experimentam eventos terríveis.', '2015-08-12'),
+    ('O Livro da Ressurreição', 'Necromante', 'Contém rituais para invocar os mortos.', '2014-10-30'),
+    ('O Manual do Caos', 'Caçador de Demônios', 'Um guia para invocar entidades demoníacas.', '2013-07-22'),
+    ('O Livro das Trevas', 'Sacerdote das Sombras', 'Conhecido por causar pesadelos terríveis e eventos paranormais.', '2012-02-18'),
+    ('O Tomo da Perdição', 'Feiticeiro Amaldiçoado', 'Este livro é considerado a fonte de infortúnio supremo.', '2011-12-03');
+
+```
