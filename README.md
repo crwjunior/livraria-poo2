@@ -98,3 +98,9 @@ INSERT INTO livros_proibidos (titulo, autor, descricao, dataPublicacao) VALUES
     ('O Tomo da Perdição', 'Feiticeiro Amaldiçoado', 'Este livro é considerado a fonte de infortúnio supremo.', '2011-12-03');
 
 ```
+
+### O que fui utilizado?
+
+Foi utilizado tudo que o professor Leanderson ensinou em sala de aula
+em relação ao JDBC e as demais coisas.
+E para manipular e integrar o front-end com o back-end foi utilizado o Vaadin Version 24.
